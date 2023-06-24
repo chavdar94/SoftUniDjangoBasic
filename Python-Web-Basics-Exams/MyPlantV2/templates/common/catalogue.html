@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    {% if not profile.plant_set.all %}
+        <p class="no-articles">No plants yet</p>
+    {% else %}
+        <section id="catalogue">
+            {% for plant in profile.plant_set.all %}
+                <div class="plant-card">
+                    <div class="image-wrap">
+                        <img src="{{ plant.image_url }}"
+                             alt="Indoor Plants">
+                    </div>
+                    <!-- plant name -->
+                    <h3>{{ plant.name }}</h3>
+                    <!-- plant description -->
+                    <h1>{{ plant.description|truncatechars:20 }}</h1>
+                    <div class="details-buttons">
+                        <!-- plant details button -->
+                        <a href="{% url 'plant-details' pk=plant.pk %}" class="details-btn">Details</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </section>
+    {% endif %}
+{% endblock %}

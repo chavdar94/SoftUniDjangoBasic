@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <main>
+        <div class="profile">
+            <div class="profile-data">
+                <div class="profile_img">
+                    <div class="image">
+                        {% if request.user.profile_picture %}
+                            <img src="{{ request.user.profuile_picture }}" alt="">
+                        {% else %}
+                            <img src="{% static 'images/person.png' %}" alt="img8">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="personal">
+                    <div class="edit">
+                        <p>{{ request.user.username }}</p>
+                        {% if is_owner %}
+                            <a href="{% url 'profile_edit' object.pk %}">
+                                <img class="edit-img" src="{% static 'images/edit-pen-icon-6.jpg' %}" alt="edit button">
+                            </a>
+                            <a href="{% url 'profile_delete' object.pk %}">
+                                <img class="bin-img" src="{% static 'images/icon-remove-22.jpg' %}" alt="bin button">
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="data">
+                        <span>{{ photos_count }}</span>
+                        <p>photos</p>
+
+                        <span>{{ pet_count }}</span>
+                        <p>pets</p>
+
+                        <span>{{ total_likes }}</span>
+                        <p>likes</p>
+                    </div>
+                    <h3 class="names">{{ object.get_user_full_name }}</h3>
+                    {% if object.email %}
+                        <p class="email">{{ object.email }}</p>
+                    {% endif %}
+
+                    {% if object.gender %}
+                        <p class="gender">{{ object.gender }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="pets">
+                <div class="statuses">
+                    {% for pet in pets %}
+                        <a href="{% url 'pet_details' object.username pet.slug %}">
+                            <div class="head-pet">
+                                <div class="status">
+                                    <div class="image">
+                                        <img src="{{ pet.personal_photo }}"
+                                             alt="pet img">
+                                    </div>
+                                </div>
+                                <p>{{ pet.name }}</p>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="pet-photos">
+                {% for photo in photos %}
+                    <a href="{% url 'photo_details' photo.pk %}">
+                        <img src="{{ photo.photo.url }}"
+                             alt="pet img">
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </main>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load custom_tags %}
+{#{% load placeholders %}#}
+
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'register' %}" method="post">
+        {% for field in form %}
+            <div>
+{#                {{ field.label }}#}
+                {{ field|add_classes:'form-control mb-5 w-50' }}
+            </div>
+        {% endfor %}
+{#        {{ form|add_class:'form-control mb-5 w-50' }}#}
+        <button>Send</button>
+        {% csrf_token %}
+    </form>
+{% endblock %}

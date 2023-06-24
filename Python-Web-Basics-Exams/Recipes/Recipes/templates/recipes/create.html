@@ -1,0 +1,16 @@
+{% extends 'base/base.html' %}
+{% block content %}
+    <div class="container">
+        <h1>Create Recipe</h1>
+        <div class="items-container">
+            <div class="item">
+                <form method="POST" action="{% url 'recipe_create' %}">
+                    {{ form }}
+                    <input type="submit" value="Create">
+                    {% csrf_token %}
+                </form>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

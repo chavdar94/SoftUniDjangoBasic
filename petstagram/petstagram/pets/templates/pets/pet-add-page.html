@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main>
+    <div class="edit-delete edit-photo">
+        <h2>Add pet</h2>
+        <form action="{% url 'pet_add' %}" method="post">
+            {{ form.as_p }}
+            <button class="add-btn" type="submit">Add Pet</button>
+            {% csrf_token %}
+        </form>
+    </div>
+</main>
+{% endblock %}

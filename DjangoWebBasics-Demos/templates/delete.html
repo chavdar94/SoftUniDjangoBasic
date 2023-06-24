@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load custom_tags %}
+
+{% block content %}
+    <form action="{% url 'delete' pk=person.pk %}" method="post">
+        {% for field in form %}
+            {{ field.label }}
+            {{ field|add_classes:'form-control mb-5 w-50' }}
+            {% csrf_token %}
+        {% endfor %}
+    </form>
+{% endblock %}

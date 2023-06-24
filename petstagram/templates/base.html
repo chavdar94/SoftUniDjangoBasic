@@ -1,0 +1,80 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet"
+          href="{% static 'css/styles.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/free-30-instagram-stories-icons23_122570.png' %}">
+    <title>Petstagram</title>
+</head>
+<body>
+<header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <a href="{% url 'home_page' %}">
+                    <img width="50px" src="{% static 'images/free-30-instagram-stories-icons23_122570.png' %}"
+                         alt="img1">
+                </a>
+                <a class="home" href="{% url 'home_page' %}">
+                    <i>Petstagram</i>
+                </a>
+            </div>
+            <div class="nav-links">
+                <ul class="nav-group">
+                    <li class="nav-item">
+                        <a href="{% url 'pet_add' %}">
+                            <i>Add Pet</i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="{% url 'photo_add' %}">
+                            <i>Add Photo</i>
+                        </a>
+                    </li>
+                    {% if not request.user.is_authenticated %}
+                        <li class="nav-item">
+                            <a href="{% url 'login' %}">
+                                <i>Login</i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'register' %}">
+                                <i>Register</i>
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a href="{% url 'profile_details' pk=request.user.pk %}">
+                                <i>Profile</i>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{% url 'logout' %}">
+                                <i>Logout</i>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<!-- End Header Section with Navigation Bar -->
+
+{% block content %}
+{% endblock %}
+
+<!-- Start Footer Section -->
+<div class="footer">
+		<span class="footer-section">
+			© 2022 SOFTUNI WORKSHOP FOR PYTHON WEB MODULE
+		</span>
+</div>
+<!-- End Footer Section -->
+
+</body>
+</html>

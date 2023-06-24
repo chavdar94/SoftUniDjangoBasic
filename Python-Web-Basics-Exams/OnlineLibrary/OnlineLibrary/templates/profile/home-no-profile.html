@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="{% static 'images/library.jpg' %}" type="image/x-icon" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>Online Books Library</title>
+</head>
+
+<body>
+    <div id="container">
+        <header id="site-header">
+            <nav class="navbar">
+                <section class="navbar-dashboard">
+                    <a href="{% url 'home_page' %}">Dashboard</a>
+                </section>
+            </nav>
+        </header>
+
+        <section id="register-page" class="register">
+            <form id="register-form" action="{% url 'home_page' %}" method="post">
+                <fieldset>
+                    <legend>Profile Form</legend>
+                    {{ form }}
+                    <input class="button submit" type="submit" value="Enter">
+                    {% csrf_token %}
+                </fieldset>
+            </form>
+        </section>
+
+        <footer id="site-footer">
+            <p>Python Web Basics Retake Exam @SoftUni</p>
+        </footer>
+    </div>
+</body>
+
+</html>
