@@ -23,12 +23,18 @@ class FruitEdit(views.UpdateView):
     success_url = reverse_lazy('dashboard')
 
 
-class FruitDelete(views.DeleteView, FruitEdit):
+class FruitDelete(views.DeleteView):
     model = Fruit
     form_class = FruitDeleteForm
     template_name = 'fruit/delete-fruit.html'
     success_url = reverse_lazy('dashboard')
 
-    def get_context_data(self, **kwargs):
-        context = super(FruitEdit, self).get_context_data(**kwargs)
-        return context
+    def get_form_kwargs(self):
+        instance = self.get_object()
+        form = super().get_form_kwargs()
+        form.update(instance=instance)
+        return form
+
+    # def get_context_data(self, **kwargs):
+    #     context = super(FruitEdit, self).get_context_data(**kwargs)
+    #     return context

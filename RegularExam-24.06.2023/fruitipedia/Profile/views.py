@@ -13,20 +13,25 @@ class ProfileCreate(views.CreateView):
     success_url = reverse_lazy('dashboard')
 
 
-# class ProfileDetails(ProfileInfo, views.DetailView):
-#     model = Profile
-#     template_name = 'profile/details-profile.html'
-#     extra_context = {'fruits_count': Fruit.objects.all().count()}
+class ProfileDetails(ProfileInfo, views.DetailView):
+    model = Profile
+    template_name = 'profile/details-profile.html'
+    # extra_context = {'fruits_count': Fruit.objects.all().count()}
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['fruits_count'] = Fruit.objects.all().count()
+        return context
 
 
-def profile_details(request):
-    profile = Profile.objects.first()
-    fruits_count = Fruit.objects.all().count()
-    context = {
-        'profile': profile,
-        'fruits_count': fruits_count
-    }
-    return render(request, 'profile/details-profile.html', context)
+# def profile_details(request):
+#     profile = Profile.objects.first()
+#     fruits_count = Fruit.objects.all().count()
+#     context = {
+#         'profile': profile,
+#         'fruits_count': fruits_count
+#     }
+#     return render(request, 'profile/details-profile.html', context)
 
 
 class ProfileEdit(ProfileInfo, views.UpdateView):

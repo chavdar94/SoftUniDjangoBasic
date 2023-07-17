@@ -1,25 +1,40 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.views import generic as views
+from django.contrib.auth import get_user_model
 
 from .models import Photo
 from .forms import PhotoCreateForm, PhotoEditForm
 
+UserModel = get_user_model()
 
-def photo_add(request):
-    # начин без `if` проверка
-    # form = PhotoCreateForm(request.POST or None, request.FILES or None)
-    if request.method == 'GET':
-        form = PhotoCreateForm()
-    else:
-        form = PhotoCreateForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('home_page')
 
-    context = {
-        'form': form,
-    }
+class PhotoCreateView(views.CreateView):
+    form_class = PhotoCreateForm
+    template_name = 'photos/photo-add-page.html'
+    success_url = reverse_lazy('home_page')
 
-    return render(request, 'photos/photo-add-page.html', context)
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.instance.user = self.request.user
+        return form
+
+# def photo_add(request):
+#     # начин без `if` проверка
+#     # form = PhotoCreateForm(request.POST or None, request.FILES or None)
+#     if request.method == 'GET':
+#         form = PhotoCreateForm()
+#     else:
+#         form = PhotoCreateForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('home_page')
+#
+#     context = {
+#         'form': form,
+#     }
+#
+#     return render(request, 'photos/photo-add-page.html', context)
 
 
 def photo_details(request, pk):
