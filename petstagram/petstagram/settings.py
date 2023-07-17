@@ -59,8 +59,7 @@ ROOT_URLCONF = 'petstagram.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -139,3 +138,9 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
 
 AUTH_USER_MODEL = 'accounts.AppUser'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.google.com'
+EMAIL_HOST_USER = 'no.reply.petstagram@gmail.com'
+EMAIL_HOST_PASSWORD = 'gqhidvelyurzdxcfvghbn'
+EMAIL_PORT = 587

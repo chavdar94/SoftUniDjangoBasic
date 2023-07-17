@@ -19,23 +19,6 @@ class PhotoCreateView(views.CreateView):
         form.instance.user = self.request.user
         return form
 
-# def photo_add(request):
-#     # начин без `if` проверка
-#     # form = PhotoCreateForm(request.POST or None, request.FILES or None)
-#     if request.method == 'GET':
-#         form = PhotoCreateForm()
-#     else:
-#         form = PhotoCreateForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('home_page')
-#
-#     context = {
-#         'form': form,
-#     }
-#
-#     return render(request, 'photos/photo-add-page.html', context)
-
 
 def photo_details(request, pk):
     photo = Photo.objects.filter(pk=pk).get()

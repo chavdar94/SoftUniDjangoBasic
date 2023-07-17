@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.views import generic as views
 from django.contrib.auth import get_user_model
 from django.contrib.auth import views as auth_views
+from django.core.paginator import Paginator
 
 from .forms import UserCreateForm, UserLoginForm, UserEditForm
 from ..photos.models import Photo
@@ -34,14 +35,23 @@ class UserDetailsView(views.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        photos = self.object.photo_set.prefetch_related('like_set')
+        photos_liked = self.object.photo_set.prefetch_related('like_set')
+
+        photos = self.object.photo_set.all()
+        paginator = Paginator(photos, 2)
+        page_number = self.request.GET.get('page') or 1
+        page_obj = paginator.get_page(page_number)
 
         context['is_owner'] = self.request.user == self.object
         context['photos_count'] = self.object.photo_set.all().count()
         context['pet_count'] = self.object.pet_set.count()
-        context['total_likes'] = sum(x.like_set.count() for x in photos)
+        context['total_likes'] = sum(x.like_set.count() for x in photos_liked)
         context['pets'] = self.object.pet_set.all()
-        context['photos'] = photos
+        context['photos'] = photos_liked
+        context['paginator'] = paginator
+        context['page_number'] = page_number
+        context['page_obj'] = page_obj
+
         return context
 
 
